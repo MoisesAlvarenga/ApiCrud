@@ -9,11 +9,19 @@ namespace TimeFutebol.Data
         {
         }
 
-        public DbSet<Time> Times { get; set; }
+        public DbSet<TimeModel> Times { get; set; }
+        public DbSet<JogadorModel> Jogador { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Time>().HasKey(x => x.Id);
+            builder.Entity<TimeModel>().ToTable("Time");
+            builder.Entity<TimeModel>().HasKey(t => t.IdTime);
+           
+            builder.Entity<JogadorModel>().ToTable("Jogador");
+            builder.Entity<JogadorModel>().HasKey(j => j.IdJogador);
             base.OnModelCreating(builder);
+
+            
         }
     }
 }

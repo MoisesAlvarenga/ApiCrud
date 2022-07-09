@@ -11,8 +11,11 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TimeFutebol.Data;
+using TimeFutebol.Interface;
+using TimeFutebol.Repository;
 
 namespace TimeFutebol
 {
@@ -29,10 +32,14 @@ namespace TimeFutebol
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
             // Trecho responsavel por conectar o banco de dados � aplica��o
             services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DataContext")));
-            
 
+            services.AddScoped<IJogadorRepository, JogadorRepository>();
+            services.AddScoped<ITimeRepository, TimeRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
