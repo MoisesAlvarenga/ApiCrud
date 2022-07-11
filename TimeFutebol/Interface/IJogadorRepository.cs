@@ -11,12 +11,12 @@ namespace TimeFutebol.Interface
 
         Task<JogadorModel> Insert(JogadorModel jogador);
 
-        Task<JogadorModel> Update(JogadorModel jogador);
+        Task Update(JogadorModel jogador);
 
         Task Delete(int id);
-        Task <JogadorModel> Get(int id);
+        Task <IEnumerable<JogadorModel>> Get(int? id);
 
-        Task<IEnumerable<JogadorModel>> Get();
-
+        //Task<IEnumerable<JogadorModel>> Get();
+        Task<JogadorModel> GetObject(int id);
     }
 }

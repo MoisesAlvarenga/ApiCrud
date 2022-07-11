@@ -22,16 +22,16 @@ namespace TimeFutebol.Controllers
             _jogador = jogador;
         }
 
-        [HttpGet("{id}")]
-        public async Task<JogadorModel> Get(int id)
-        {
-            return await _jogador.Get(id);       
-        }
+        // [HttpGet("{id}")]
+        // public async Task<JogadorModel> Get(int id)
+        //{
+        //return await _jogador.Get(id);       
+        //}
 
         [HttpGet]
-        public async Task<IEnumerable<JogadorModel>> Get()
+        public async Task<IEnumerable<JogadorModel>> Get(int? id)
         {
-            return await _jogador.Get();
+            return await _jogador.Get(id);
         }
 
         [HttpPost]
@@ -41,15 +41,22 @@ namespace TimeFutebol.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {   
-            var JogadorToDelete = await _jogador.Get(id);
+        public async Task<JogadorModel> Delete(int id)
+        {
+            var JogadorToDelete = await _jogador.GetObject(id);
             if(JogadorToDelete != null)
             {
 
                 await _jogador.Delete(JogadorToDelete.IdJogador);
             }
             return null;
+        }
+
+
+        [HttpPut]
+        public Task Update(JogadorModel jogador)
+        {
+            return _jogador.Update(jogador);
         }
 
     }

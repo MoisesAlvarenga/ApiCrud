@@ -22,22 +22,28 @@ namespace TimeFutebol.Data
         {
             var JogadorToDelete = await _context.Jogador.FindAsync(id);
             _context.Jogador.Remove(JogadorToDelete);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();           
         }
 
-        public async Task<JogadorModel> Get(int id)
+        public async Task<IEnumerable<JogadorModel>> Get(int? id)
         {
-            return await _context.Jogador.FindAsync(id);
-            
-
-        }
-
-        public async Task<IEnumerable<JogadorModel>> Get()
-        {
-            
             return await _context.Jogador.Select(j => j).Include(t => t.Time).ToListAsync();
 
+
         }
+
+
+        public async Task<JogadorModel> GetObject(int id)
+        {
+            return await _context.Jogador.FindAsync(id);
+        }
+
+        //public async Task<IEnumerable<JogadorModel>> Get()
+        //{
+
+        //return await _context.Jogador.Select(j => j).Include(t => t.Time).ToListAsync();
+
+        //}
 
         public async Task<JogadorModel> Insert(JogadorModel jogador)
         {
@@ -47,9 +53,10 @@ namespace TimeFutebol.Data
 
         }
 
-        public Task<JogadorModel> Update(JogadorModel jogador)
+        public async Task Update(JogadorModel jogador)
         {
-            throw new System.NotImplementedException();
+            _context.Entry(jogador).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }
