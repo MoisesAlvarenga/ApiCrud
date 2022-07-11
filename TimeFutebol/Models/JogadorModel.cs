@@ -20,9 +20,11 @@ namespace TimeFutebol.Models
         public string Posicao { get; set; }
         public float Peso { get; set; }
         public float Altura { get; set; }
+        public int TimeFK { get; set; }
 
-        [ForeignKey("TimeFK")]
-        public  TimeModel Time { get; set; }
+
+       [ForeignKey("TimeFK")]
+       public  TimeModel Time { get; set; }
 
     }
 }

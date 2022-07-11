@@ -14,6 +14,9 @@ namespace TimeFutebol.Interface
         Task<JogadorModel> Update(JogadorModel jogador);
 
         Task Delete(int id);
+        Task <JogadorModel> Get(int id);
+
         Task<IEnumerable<JogadorModel>> Get();
+
     }
 }

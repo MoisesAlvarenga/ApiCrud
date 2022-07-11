@@ -11,26 +11,46 @@ using TimeFutebol.Repository;
 namespace TimeFutebol.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Jogador/[controller]")]
     public class JogadorController : ControllerBase
     {
         private readonly IJogadorRepository _jogador;
-        private readonly ITimeRepository _time;
 
 
-        public JogadorController(IJogadorRepository jogador, ITimeRepository time)
+        public JogadorController(IJogadorRepository jogador)
         {
             _jogador = jogador;
-            _time = time;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<JogadorModel> Get(int id)
+        {
+            return await _jogador.Get(id);       
         }
 
         [HttpGet]
         public async Task<IEnumerable<JogadorModel>> Get()
         {
-
             return await _jogador.Get();
-            
-            
         }
+
+        [HttpPost]
+        public async Task<JogadorModel> Insert(JogadorModel jogador)
+        {
+            return await _jogador.Insert(jogador);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {   
+            var JogadorToDelete = await _jogador.Get(id);
+            if(JogadorToDelete != null)
+            {
+
+                await _jogador.Delete(JogadorToDelete.IdJogador);
+            }
+            return null;
+        }
+
     }
 }

@@ -18,19 +18,33 @@ namespace TimeFutebol.Data
         }
 
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var JogadorToDelete = await _context.Jogador.FindAsync(id);
+            _context.Jogador.Remove(JogadorToDelete);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<JogadorModel> Get(int id)
+        {
+            return await _context.Jogador.FindAsync(id);
+            
+
         }
 
         public async Task<IEnumerable<JogadorModel>> Get()
         {
+            
             return await _context.Jogador.Select(j => j).Include(t => t.Time).ToListAsync();
+
         }
 
-        public Task<JogadorModel> Insert(JogadorModel jogador)
+        public async Task<JogadorModel> Insert(JogadorModel jogador)
         {
-            throw new System.NotImplementedException();
+            _context.Jogador.Add(jogador);
+            await _context.SaveChangesAsync();
+            return jogador;
+
         }
 
         public Task<JogadorModel> Update(JogadorModel jogador)
