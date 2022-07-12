@@ -22,12 +22,6 @@ namespace TimeFutebol.Controllers
             _jogador = jogador;
         }
 
-        // [HttpGet("{id}")]
-        // public async Task<JogadorModel> Get(int id)
-        //{
-        //return await _jogador.Get(id);       
-        //}
-
         [HttpGet]
         public async Task<IEnumerable<JogadorModel>> Get(int? id)
         {

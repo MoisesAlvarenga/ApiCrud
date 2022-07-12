@@ -16,6 +16,8 @@ namespace TimeFutebol.Models
         [Key]
         public int IdJogador { get; set; }
         public string Nome { get; set; }
+
+        
         public int Camisa { get; set; }
         public string Posicao { get; set; }
         public float Peso { get; set; }

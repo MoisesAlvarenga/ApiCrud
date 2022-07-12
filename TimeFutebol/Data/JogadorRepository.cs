@@ -27,9 +27,14 @@ namespace TimeFutebol.Data
 
         public async Task<IEnumerable<JogadorModel>> Get(int? id)
         {
-            return await _context.Jogador.Select(j => j).Include(t => t.Time).ToListAsync();
-
-
+            if (id != null)
+            {
+                return await _context.Jogador.Where(x => x.IdJogador == id).ToListAsync();
+            }
+            else
+            {
+                return await _context.Jogador.Select(j => j).Include(t => t.Time).ToListAsync();
+            }
         }
 
 
@@ -38,19 +43,22 @@ namespace TimeFutebol.Data
             return await _context.Jogador.FindAsync(id);
         }
 
-        //public async Task<IEnumerable<JogadorModel>> Get()
-        //{
-
-        //return await _context.Jogador.Select(j => j).Include(t => t.Time).ToListAsync();
-
-        //}
-
         public async Task<JogadorModel> Insert(JogadorModel jogador)
         {
-            _context.Jogador.Add(jogador);
-            await _context.SaveChangesAsync();
-            return jogador;
+            try
+            {
+                _context.Jogador.Add(jogador);
+                await _context.SaveChangesAsync();
+                return jogador;
+            }
+            catch (DbUpdateException ex)
+            {
+                System.Console.Write(ex.Message);
+                return jogador;
+                
 
+            }
+      
         }
 
         public async Task Update(JogadorModel jogador)

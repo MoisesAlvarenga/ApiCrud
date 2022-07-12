@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TimeFutebol.Models;
 
 namespace TimeFutebol.Data
@@ -19,9 +22,15 @@ namespace TimeFutebol.Data
            
             builder.Entity<JogadorModel>().ToTable("Jogador");
             builder.Entity<JogadorModel>().HasKey(j => j.IdJogador);
+            builder.Entity<JogadorModel>().HasIndex(x => x.Camisa).IsUnique();
             base.OnModelCreating(builder);
 
             
+        }
+
+        internal Task<IEnumerable<JogadorModel>> FindAsync(int? id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
