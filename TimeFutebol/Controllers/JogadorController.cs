@@ -28,6 +28,7 @@ namespace TimeFutebol.Controllers
             return await _jogador.Get(id);
         }
 
+        
         [HttpPost]
         public async Task<JogadorModel> Insert(JogadorModel jogador)
         {

@@ -17,16 +17,16 @@ namespace TimeFutebol.Models
         public int IdJogador { get; set; }
         public string Nome { get; set; }
 
-        
+  
         public int Camisa { get; set; }
         public string Posicao { get; set; }
         public float Peso { get; set; }
         public float Altura { get; set; }
         public int TimeFK { get; set; }
-
-
        [ForeignKey("TimeFK")]
        public  TimeModel Time { get; set; }
+       [NotMapped]
+       public ErrorInfo ErrorJogador { get; set; }
 
     }
 }

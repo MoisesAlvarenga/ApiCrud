@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using TimeFutebol.Interface;
 using TimeFutebol.Models;
+using System.Web.Http;
+using System.Net;
+using System.Net.Http;
 
 namespace TimeFutebol.Data
 {
@@ -11,6 +14,7 @@ namespace TimeFutebol.Data
     {
 
         public readonly DataContext _context;
+        
 
         public JogadorRepository(DataContext context)
         {
@@ -45,6 +49,7 @@ namespace TimeFutebol.Data
 
         public async Task<JogadorModel> Insert(JogadorModel jogador)
         {
+            var JsonString = new JogadorModel();
             try
             {
                 _context.Jogador.Add(jogador);
@@ -53,10 +58,19 @@ namespace TimeFutebol.Data
             }
             catch (DbUpdateException ex)
             {
-                System.Console.Write(ex.Message);
-                return jogador;
                 
+               var error =  ex.InnerException.HResult.ToString();
+                if(error == "-2147467259")
+                {
 
+                    var resp = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                    {
+                        Content = new StringContent(string.Format($"Já existe um jogador com a camisa {jogador.Camisa}")),
+                        ReasonPhrase = "Não pode haver dois jogadores com o mesmo uniforme."
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return jogador;
             }
       
         }
