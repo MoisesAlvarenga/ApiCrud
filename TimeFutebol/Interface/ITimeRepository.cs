@@ -13,5 +13,6 @@ namespace TimeFutebol.Repository
         Task<TimeModel> Update(TimeModel jogador);
 
         Task Delete(int id);
+        public Task<TimeModel> GetObject(int id);
     }
 }

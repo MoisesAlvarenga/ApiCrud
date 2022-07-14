@@ -11,7 +11,7 @@ using TimeFutebol.Repository;
 namespace TimeFutebol.Controllers
 {
     [ApiController]
-    [Route("Jogador/[controller]")]
+    [Route("[controller]")]
     public class JogadorController : ControllerBase
     {
         private readonly IJogadorRepository _jogador;
@@ -30,9 +30,11 @@ namespace TimeFutebol.Controllers
 
         
         [HttpPost]
-        public async Task<JogadorModel> Insert(JogadorModel jogador)
+        public async Task<ActionResult<JogadorModel>> Insert(JogadorModel jogador)
         {
+
             return await _jogador.Insert(jogador);
+
         }
 
         [HttpDelete("{id}")]
